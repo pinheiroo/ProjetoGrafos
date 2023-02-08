@@ -38,11 +38,10 @@ class Grafo{
     }
 
     public String toString(){
-        int i;
-        for (i=0;i<v-1;i++){
-            System.out.print(i + "->" + lista[i].toString()+"\n");
-        }
-        System.out.print(i + "->");
-        return lista[v-1].toString();
+        String strLista = new String();
+        for (int i=0;i<v;i++){
+            strLista += i + "->" + lista[i] + "\n";
+        } 
+        return strLista;
     }
 }
