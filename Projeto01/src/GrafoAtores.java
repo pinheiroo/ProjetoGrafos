@@ -1,18 +1,17 @@
+
 import java.io.*;
 import java.util.ArrayList;
 
 public class GrafoAtores {
+
+    private Grafo grafo;                        
+    private ArrayList<String> nomes;  
     
-
-    private Grafo grafo;                        // grafo com vértices numéricos 
-    private ArrayList<String> nomes;          // faz o mapeamento índice --> nome
-    // o número do vértice no grafo é usado como índice do vetor nomes
-
-
-    /**
-     * Inicializa o grafo a partir de um arquivo-texto 
-     * @param nomeArquivo nome do arquivo-texto de entrada
-     */
+    public static void main(String[] args) throws IOException {
+        GrafoAtores grafo = new GrafoAtores("movies.txt");
+        grafo.printGrafoNomes();
+    }
+ 
     public GrafoAtores(String nomeArquivo) throws IOException{
         nomes = new ArrayList<String>();
         setLista(nomeArquivo);
@@ -29,11 +28,10 @@ public class GrafoAtores {
         try{
             String s = br.readLine(); // primeira linha
             while (s != null) {
-                System.out.println(s);
                 filme = s.split("/"); //pode dar ero
                 for(int i=1; i<filme.length;i++){
                     if(!contem(filme[i])){
-                        setNomes(filme[i]);
+                        nomes.add(filme[i]);
                     }
                 }
                 s = br.readLine();
@@ -50,15 +48,17 @@ public class GrafoAtores {
         InputStream is = new FileInputStream(nomeArquivo);
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader br = new BufferedReader(isr);
-        String[] filme;
 
         try{
-            String s = br.readLine(); // primeira linha
+            String s = br.readLine(); 
+            String[] filme = new String[]{};
             while (s != null) {
-                System.out.println(s);
-                filme = s.split("/"); //pode dar ero
-                for(int i=1; i<filme.length;i++){
-                   
+                filme = s.split("/"); 
+                for(int i=1; i<filme.length-1;i++){
+                    for (int j=i+1; j<filme.length; j++){
+                        if(!grafo.adj(indice(filme[i])).contains(indice(filme[j]))) grafo.adicionaAresta(indice(filme[i]), indice(filme[j]));
+                    }
+                    
                 }
                 s = br.readLine();
             }
@@ -70,15 +70,6 @@ public class GrafoAtores {
 
     }
 
-    public void setNomes(String nome){
-        nomes.add(nome);
-    }
-
-    /**
-     * O grafo contém o ator com nome {@code s}?
-     * @param {@code s} nome do vértice
-     * @return {@code true} se {@code s} é o nome de um vértice, e {@code false} caso contrário
-     */
     public boolean contem(String s) {
         for(String nome:nomes)
         	if(nome.equals(s))
@@ -86,11 +77,6 @@ public class GrafoAtores {
         return false;
     }
 
-    /**
-     * Retorna o inteiro associado com o ator cujo nome é {@code s}.
-     * @param s o nome do ator
-     * @return o inteiro (entre 0 e <em>|V|</em> - 1) associado ao nome {@code s}, se o ator existir no grafo, e -1 caso contrário
-     */
     public int indice(String s) {
         int i=0;
         for(String nome: nomes){
@@ -103,12 +89,6 @@ public class GrafoAtores {
     }
 
 
-    /**
-     * Retorna o nome do ator associado ao inteiro {@code v}.
-     * @param  v o inteiro correspondente a um vértice (entre 0 e <em>V</em> - 1)
-     * @return o nome do vértice associado com o inteiro {@code v}
-     * @throws IllegalArgumentException a menos que {@code 0 <= v < V}
-     */
     public String nome(int v) {
     
     	int V = grafo.getV();
@@ -119,17 +99,28 @@ public class GrafoAtores {
 
     }
 
-
-
-    /**
-     * Retorna o grafo associado ao grafo de atores
-     * @return o grafo contendo vértices rotulados com números
-     */
-
     public Grafo G() {
         return grafo;
     }
 
     
-    
+    /* public String toString(){
+        String strLista = new String();
+        for (int i=0;i<nomes.size();i++){
+            strLista += i + "->" + nomes.get(i) + "\n";
+        } 
+        return strLista;
+    } */
+
+    public void printGrafoNomes(){
+        for(int i=0;i<nomes.size();i++){
+            System.out.print(nome(i) + "->");
+            for(int j=0; j<grafo.adj(i).size();j++){
+            System.out.print(nome(grafo.adj(i).get(j)) + " ");
+        }
+        System.out.println();
+    }
+
+    }
+
 }
