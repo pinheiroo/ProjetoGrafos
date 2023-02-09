@@ -13,7 +13,7 @@ public class GrafoAtores {
      * Inicializa o grafo a partir de um arquivo-texto 
      * @param nomeArquivo nome do arquivo-texto de entrada
      */
-    public GrafoSimbolos(String nomeArquivo) {
+    public GrafoAtores(String nomeArquivo) throws IOException{
         nomes = new ArrayList<String>();
         setLista(nomeArquivo);
         grafo = new Grafo(nomes.size());
@@ -32,8 +32,8 @@ public class GrafoAtores {
                 System.out.println(s);
                 filme = s.split("/"); //pode dar ero
                 for(int i=1; i<filme.length;i++){
-                    if(!nomes.contem(filme[i])){
-                        nomes.setNomes(filme[i]);
+                    if(!contem(filme[i])){
+                        setNomes(filme[i]);
                     }
                 }
                 s = br.readLine();
@@ -80,7 +80,7 @@ public class GrafoAtores {
      * @return {@code true} se {@code s} é o nome de um vértice, e {@code false} caso contrário
      */
     public boolean contem(String s) {
-        for(String nome : nomes )
+        for(String nome:nomes)
         	if(nome.equals(s))
         		return true;
         return false;
@@ -92,9 +92,12 @@ public class GrafoAtores {
      * @return o inteiro (entre 0 e <em>|V|</em> - 1) associado ao nome {@code s}, se o ator existir no grafo, e -1 caso contrário
      */
     public int indice(String s) {
-        for(int i=0; i<nomes.length; i++){
-        	if(nomes[i].equals(s))
+        int i=0;
+        for(String nome: nomes){
+        	if(nome.equals(s))
         		return i;
+            else
+                i++;
         }
         return -1;      
     }
@@ -108,9 +111,9 @@ public class GrafoAtores {
      */
     public String nome(int v) {
     
-    	int V = grafo.V();
+    	int V = grafo.getV();
     	if(v>=0 && v<V)
-    		return nomes[v];
+    		return nomes.get(v);
     	
     	return null;
 
