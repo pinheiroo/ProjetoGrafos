@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.ArrayList;
 
@@ -115,20 +114,20 @@ public class GrafoAtores {
 
     
     public void printGrafoNomes(){
+        System.out.printf("\nRelacoes entre atores:\n");
         for(int i=0;i<atores.size();i++){
-            System.out.printf(nome(i) + "->");
-
+            System.out.printf(atores.get(i) + "-> ");
             for(int j=0; j<grafo.adj(i).size();j++){
                 System.out.printf(nome(grafo.adj(i).get(j)) + " ");
             }
-
             System.out.println();
         }
 
     }
     public void printFilmeAtor(){
+        System.out.printf("\nFilmes estrados por:\n");
         for(int i=0;i<FilmeAtor.size();i++){
-            System.out.println(FilmeAtor.get(i) + "\n" + i);
+            System.out.println(atores.get(i) + "->" + FilmeAtor.get(i));
         }
 
     }
