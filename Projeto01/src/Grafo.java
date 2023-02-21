@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 
 class Grafo{
@@ -38,10 +38,40 @@ class Grafo{
     }
 
     public String toString(){
-        String strLista = new String();
-        for (int i=0;i<v;i++){
-            strLista += i + "->" + lista[i] + "\n";
-        } 
-        return strLista;
+        int i;
+        for (i=0;i<v-1;i++){
+            System.out.print(i + "->" + lista[i].toString()+"\n");
+        }
+        System.out.print(i + "->");
+        return lista[v-1].toString();
     }
+
+    public int[] BFS(int s){
+
+        boolean visited[] = new boolean[v];
+        LinkedList<Integer> queue = new LinkedList<Integer>();
+
+        visited[s] = true;
+        queue.add(s);
+        int[] d = new int[v];
+        d[s] = 0;
+
+        while (queue.size() != 0) {
+            s = queue.poll();
+            //System.out.print(s + " ");
+            Iterator<Integer> i = lista[s].listIterator();
+            while (i.hasNext()) {
+                int n = i.next();
+                if (!visited[n]) {
+                    visited[n] = true;
+                    queue.add(n);
+                    d[n] = d[s] + 1;
+                }
+            }
+        }
+
+        return d;
+
+    }
+    
 }
