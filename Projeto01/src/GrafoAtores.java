@@ -140,9 +140,9 @@ public class GrafoAtores {
 
     public void countFreq(int arr[], int n){
 
-        boolean visited[] = new boolean[n];
+        boolean visitou[] = new boolean[n];
 
-        Arrays.fill(visited, false);
+        Arrays.fill(visitou, false);
 
         System.out.println("Numero Bacon     Frequencias\n------------------------------");
         
@@ -150,14 +150,14 @@ public class GrafoAtores {
 
         for (int i = 0; i < n; i++) {
     
-            if (visited[i] == true){
+            if (visitou[i] == true){
                 continue;
             }
     
             int count = 1;
             for (int j = i + 1; j < n; j++) {
-                if (arr[i] == arr[j]) {
-                    visited[j] = true;
+                if ((arr[i] == arr[j])) {
+                    visitou[j] = true;
                     count++;
                 }
             }
@@ -177,9 +177,15 @@ public class GrafoAtores {
 
     public void printCaminhoAtores(String ator, String origem){
         int[] vetor = grafo.BFS(indice(origem));
+        if(vetor[indice(ator)]!=0 && indice(ator)>0)
         System.out.println(ator+" tem número de "+origem+" = "+vetor[indice(ator)]);
+        else
+        System.out.println(ator+" tem número de "+origem+" = Infinito");
 
-        caminhoAtores(ator,origem);
+        int xis = caminhoAtores(ator,origem);
+        if(xis==-1){
+            System.out.println("O ator "+ator+" não possui nenhum relacionamento com "+origem+".");
+        }
     }
 
     public int caminhoAtores(String ator, String origem){
@@ -190,8 +196,11 @@ public class GrafoAtores {
 
         if(ator1==ator2){
             return 0;
-        }
-        else{
+
+        }else if(vetor[ator1] == 0){
+            return -1;
+           
+        }else{
             for(int i=0; i<grafo.adj(ator1).size(); i++){
                 if(vetor[grafo.adj(ator1).get(i)]==vetor[ator1]-1){
                     prox = grafo.adj(ator1).get(i);
@@ -199,6 +208,7 @@ public class GrafoAtores {
                         for(int k=0; k<FilmeAtor.get(ator1).size(); k++){
                             if(FilmeAtor.get(prox).get(j).equals(FilmeAtor.get(ator1).get(k))){
                                 System.out.println(ator+" fez "+FilmeAtor.get(ator1).get(k)+" com "+nome(prox));
+                                return caminhoAtores(nome(prox),origem);
                             }
 
                         }
@@ -206,7 +216,7 @@ public class GrafoAtores {
                     }
                 }
             }
-            return caminhoAtores(nome(prox),origem);
+            return 0;
         }
     }
 }
