@@ -1,6 +1,5 @@
 import java.util.*;
 
-
 class Grafo{
 
     private int v;
@@ -20,15 +19,27 @@ class Grafo{
             listaVertices.add(new Vertice(i));
         }
     }
+
     public int getV(){
         return v;
     }
+
     public int getA(){
         return a;
     }
-    public void adicionaAresta(int u, int v, int peso){
-        listaArestas.add(new Aresta(u,v,peso));
-        listaVertices.get(u).
+
+    public void adicionaAresta(Vertice u, Vertice v, int peso){
+        listaArestas.add(new Aresta(u.getNumero(),v.getNumero(),peso));
+        listaVertices.get(u.getNumero()).setAdjacente(v);
+        listaVertices.get(v.getNumero()).setAdjacente(u);
+    }
+
+    public ArrayList<Vertice> getVertices(){
+        return listaVertices;
+    }
+
+    public ArrayList<Aresta> getArestas(){
+        return listaArestas;
     }
     
     // public String toString(){

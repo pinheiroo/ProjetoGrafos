@@ -19,6 +19,29 @@ public class Vertice {
     public ArrayList<Vertice> getAdjacencias(){
         return adjacencias;
     }
-    public 
+
+    public int getExcentricidade(){
+        return excentricidade;
+    }
+
+    public int getPi(){
+        return pi;
+    }
+
+    public int getNumero(){
+        return num;
+    }
+
+    public int getD(){
+        return d;
+    }
+
+    public boolean getVisitado(){
+        return visitado;
+    }
+
+    public void setAdjacente(Vertice u){
+        adjacencias.add(u);
+    }
 
 }
