@@ -114,6 +114,15 @@ class Grafo{
         }
         return max;
     }
-    
 
+    public void printAdj(){
+        for(int i=0;i<v;i++){
+            for(int j=0;j<v;j++){
+                if(adj[i][j]!=0){
+                    System.out.println(i+"-"+j+": "+adj[i][j]);
+                }
+            }
+        }
+    }
+    
 }
